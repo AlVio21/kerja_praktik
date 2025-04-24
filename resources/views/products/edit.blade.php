@@ -1,57 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="text-white text-center mb-4 h1 bg-primary p-3">Edit Produk</h1>
-<div class="container">
-    <form action="{{ route('products.update', $product->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
+        <a href="{{ route('products.index') }}" class="text-blue-500 hover:underline text-sm mb-4 inline-block">
+            ← Kembali ke Daftar Produk
+        </a>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Produk</h2>
 
-        <div class="mb-3">
-            <label class="text-white">Nama Produk</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name', $product->name) }}" required>
-            @error('name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+        <form action="{{ route('products.update', $product->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <div class="mb-3">
-            <label class="text-white">Deskripsi</label>
-            <textarea name="description" class="form-control" rows="3" required>{{ old('description', $product->description) }}</textarea>
-            @error('description')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Nama Produk</label>
+                <input type="text" name="name" value="{{ old('name', $product->name) }}" 
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="text-white">Harga (Rp)</label>
-            <input type="number" name="price" class="form-control" value="{{ old('price', $product->price) }}" required>
-            @error('price')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Deskripsi</label>
+                <textarea name="description" rows="4" 
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200"
+                    required>{{ old('description', $product->description) }}</textarea>
+            </div>
 
-        <div class="mb-3">
-            <label class="text-white">Stok</label>
-            <input type="number" name="stock" class="form-control" value="{{ old('stock', $product->stock) }}" required>
-            @error('stock')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Harga (Rp)</label>
+                <input type="number" name="price" value="{{ old('price', $product->price) }}" 
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="text-white">Kategori</label>
-            <select name="category" class="form-control" required>
-                <option value="">-- Pilih Kategori --</option>
-                <option value="motor" {{ old('category', $product->category) == 'motor' ? 'selected' : '' }}>Motor</option>
-                <option value="mobil" {{ old('category', $product->category) == 'mobil' ? 'selected' : '' }}>Mobil</option>
-            </select>
-            @error('category')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Stok</label>
+                <input type="number" name="stock" value="{{ old('stock', $product->stock) }}" 
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200" required>
+            </div>
 
-        <button class="btn btn-primary">Perbarui</button>
-    </form>
+            <div class="mb-6">
+                <label class="block text-gray-700">Kategori</label>
+                <select name="category" 
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="mobil" {{ $product->category == 'mobil' ? 'selected' : '' }}>Mobil</option>
+                    <option value="motor" {{ $product->category == 'motor' ? 'selected' : '' }}>Motor</option>
+                    <!-- Tambah kategori lain sesuai kebutuhan -->
+                </select>
+            </div>
+
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md">
+                Simpan Perubahan
+            </button>
+        </form>
+    </div>
 </div>
 @endsection

@@ -1,46 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="text-white text-center mb-4 h1 bg-primary p-3">Daftar Produk</h1>
-<div class="container">
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <h1 class="text-2xl font-semibold text-white bg-blue-600 px-4 py-2 rounded-md shadow mb-6">
+        Daftar Produk
+    </h1>
 
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
+    <div class="flex justify-end mb-4">
+        <a href="{{ route('products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow transition">
+            + Tambah Produk
+        </a>
+    </div>
 
-    <table class="table table-bordered table-dark border-2 border-blue-500">
-        <thead class="table-dark text-center fw-bold fs-5">
-            <tr>
-                <th>Nama</th>
-                <th>Deskripsi</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Kategori</th>
-                <th style="width: 1%; white-space: nowrap;">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($products as $p)
+    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200 text-center">
+            <thead class="bg-gray-100 text-gray-700">
                 <tr>
-                    <td>{{ $p->name }}</td>
-                    <td>{{ $p->description }}</td>
-                    <td>Rp {{ number_format($p->price, 0, ',', '.') }}</td>
-                    <td>{{ $p->stock }}</td>
-                    <td>{{ ucfirst($p->category) }}</td>
-                    <td>
-                        <a href="{{ route('products.edit', $p) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
-                        <form action="{{ route('products.destroy', $p) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?');" style="display:inline;">
+                    <th class="px-4 py-2">Nama</th>
+                    <th class="px-4 py-2">Deskripsi</th>
+                    <th class="px-4 py-2">Harga</th>
+                    <th class="px-4 py-2">Stok</th>
+                    <th class="px-4 py-2">Kategori</th>
+                    <th class="px-4 py-2">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                @forelse($products as $p)
+                <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-2">{{ $p->name }}</td>
+                    <td class="px-4 py-2">{{ $p->description }}</td>
+                    <td class="px-4 py-2">Rp {{ number_format($p->price, 0, ',', '.') }}</td>
+                    <td class="px-4 py-2">{{ $p->stock }}</td>
+                    <td class="px-4 py-2">{{ ucfirst($p->category) }}</td>
+                    <td class="px-4 py-2 space-x-2">
+                        <a href="{{ route('products.edit', $p) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm">
+                            Edit
+                        </a>
+                        <form action="{{ route('products.destroy', $p) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger btn-sm">Hapus</button>
+                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                Hapus
+                            </button>
                         </form>
                     </td>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+                @empty
+                <tr>
+                    <td colspan="6" class="px-4 py-4 text-gray-500 italic">Belum ada produk.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection

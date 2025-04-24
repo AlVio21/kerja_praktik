@@ -6,6 +6,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <!-- CoreUI CSS -->
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+        <!-- CoreUI JS -->
+        <script src="{{ asset('public/vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,23 +19,44 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <div class="flex">
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+            <!-- Sidebar -->
+            <div class="w-64 h-screen bg-gray-800 text-white">
+                <div class="py-6 px-4">
+                    <h2 class="text-xl font-semibold">PT Centradist Partsindo Utama</h2>
+                </div>
+                <nav class="space-y-4 px-4">
+                    <ul>
+                        <li><a href="{{ route('orders.index') }}" class="block py-2 px-3 rounded-md hover:bg-gray-700">Orders</a></li>
+                        <li><a href="{{ route('products.index') }}" class="block py-2 px-3 rounded-md hover:bg-gray-700">Products</a></li>
+                        <li><a href="{{ route('customers.index') }}" class="block py-2 px-3 rounded-md hover:bg-gray-700">Customers</a></li>
+                        
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="flex-1">
+                @include('layouts.navigation')
+
+                <!-- Page Heading -->
+                @isset($header)
+                    <header class="bg-soft-blue text-gray-100">
+                        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
+
+                <!-- Page Content -->
+                <main class="bg-mint-green text-gray-800">
+                    @yield('content')
+                </main>
+            </div>
         </div>
+
     </body>
 </html>

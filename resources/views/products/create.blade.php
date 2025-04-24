@@ -1,55 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="text-white text-center mb-4 h1 bg-primary p-3">Tambah Produk Baru</h1>
-<div class="container">
-    <form action="{{ route('products.store') }}" method="POST">
-        @csrf
-        <div class="mb-3">
-            <label class="text-white">Nama Produk</label>
-            <input type="text" name="name" class="form-control" required>
-            @error('name')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+<div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-xl w-full space-y-8 bg-white p-8 rounded-xl shadow-lg">
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold text-gray-800">Tambah Produk Baru</h2>
+            <a href="{{ route('products.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
         </div>
 
-        <div class="mb-3">
-            <label class="text-white">Deskripsi</label>
-            <textarea name="description" class="form-control" rows="3" required></textarea>
-            @error('description')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+        <form class="space-y-6" action="{{ route('products.store') }}" method="POST">
+            @csrf
 
-        <div class="mb-3">
-            <label class="text-white">Harga (Rp)</label>
-            <input type="number" name="price" class="form-control" required>
-            @error('price')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Nama Produk</label>
+                <input type="text" name="name" id="name" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
 
-        <div class="mb-3">
-            <label class="text-white">Stok</label>
-            <input type="number" name="stock" class="form-control" required>
-            @error('stock')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
+            <div>
+                <label for="description" class="block text-sm font-medium text-gray-700">Deskripsi</label>
+                <textarea name="description" id="description" rows="3" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+            </div>
 
-        <div class="mb-3">
-            <label class="text-white">Kategori</label>
-            <select name="category" class="form-control" required>
-                <option value="">-- Pilih Kategori --</option>
-                <option value="motor">Motor</option>
-                <option value="mobil">Mobil</option>
-            </select>
-            @error('category')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>        
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700">Harga (Rp)</label>
+                <input type="number" name="price" id="price" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
 
-        <button class="btn btn-success">Simpan</button>
-    </form>
+            <div>
+                <label for="stock" class="block text-sm font-medium text-gray-700">Stok</label>
+                <input type="number" name="stock" id="stock" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+            </div>
+
+            <div>
+                <label for="category" class="block text-sm font-medium text-gray-700">Kategori</label>
+                <select name="category" id="category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="motor">Motor</option>
+                    <option value="mobil">Mobil</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow">Simpan</button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection

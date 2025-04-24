@@ -16,13 +16,13 @@ class ProductController extends Controller
             abort(403, 'Anda tidak memiliki akses.');
         }
     
-        $customers = Product::all();
-        return view('admin.customers.index', compact('customers'));
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
     public function create()
     {
-        return view('admin.products.create');
+        return view('products.create');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('admin.products.edit', compact('product'));
+        return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)

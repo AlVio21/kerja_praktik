@@ -1,29 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Tambah Customer</h1>
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Customer</h2>
 
-    <form action="{{ route('customers.store') }}" method="POST">
-        @csrf
+        <form action="{{ route('customers.store') }}" method="POST">
+            @csrf
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Nama Lengkap</label>
-            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Nama</label>
+                <input type="text" name="name" value="{{ old('name') }}"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="address" class="form-label">Alamat</label>
-            <input type="text" name="address" class="form-control" value="{{ old('address') }}" required>
-        </div>
+            <div class="mb-4">
+                <label class="block text-gray-700">Telepon</label>
+                <input type="text" name="phone" value="{{ old('phone') }}"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200">
+            </div>
 
-        <div class="mb-3">
-            <label for="phone" class="form-label">Telepon</label>
-            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
-        </div>
+            <div class="mb-6">
+                <label class="block text-gray-700">Alamat</label>
+                <textarea name="address" rows="3"
+                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200">{{ old('address') }}</textarea>
+            </div>
 
-        <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('customers.index') }}" class="btn btn-secondary">Batal</a>
-    </form>
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                Simpan
+            </button>
+        </form>
+    </div>
 </div>
 @endsection
