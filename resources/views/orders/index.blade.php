@@ -1,21 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Daftar Pesanan</h1>
-    <a href="{{ route('orders.create') }}" class="btn btn-primary">
-        Buat Pesanan Baru
-    </a>
-</div>
+<div class="container">
+    <h1>Daftar Order</h1>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-<div class="table-responsive">
-    <table class="table table-striped">
+    <a href="{{ route('orders.create') }}" class="btn btn-primary mb-3">Tambah Order</a>
+
+    <table class="table table-bordered">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Pelanggan</th>
+                <th>Customer</th>
                 <th>Produk</th>
-                <th>Total</th>
+                <th>Jumlah</th>
+                <th>Total Harga</th>
+                <th>Metode Pembayaran</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -23,17 +24,18 @@
         <tbody>
             @foreach($orders as $order)
             <tr>
-                <td>{{ $order->id }}</td>
                 <td>{{ $order->customer->name }}</td>
                 <td>{{ $order->product->name }}</td>
-                <td>{{ format_currency($order->total_price + $order->shipping_cost) }}</td>
-                <td><span class="status-badge status-{{ $order->status }}">{{ ucfirst($order->status) }}</span></td>
+                <td>{{ $order->quantity }}</td>
+                <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                <td>{{ ucfirst($order->payment_method) }}</td>
+                <td>{{ ucfirst($order->status) }}</td>
                 <td>
-                    <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline">
+                    <a href="{{ route('orders.edit', $order) }}" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="{{ route('orders.destroy', $order) }}" method="POST" style="display:inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+                        <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus order ini?')">Hapus</button>
                     </form>
                 </td>
             </tr>
