@@ -3,9 +3,10 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md">
-
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Order</h2>
-
+        <div class="flex items-center justify-between">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Order</h2>
+            <a href="{{ route('orders.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
+        </div>
         @if (session('error'))
             <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
                 {{ session('error') }}

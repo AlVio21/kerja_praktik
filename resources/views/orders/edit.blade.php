@@ -4,6 +4,7 @@
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Order</h2>
+        <a href="{{ route('orders.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
 
         <form action="{{ route('orders.update', $order->id) }}" method="POST">
             @csrf

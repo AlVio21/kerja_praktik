@@ -2,6 +2,12 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    @if(session('success'))
+    <div class="bg-green-500 text-white p-4 rounded-md mb-6">
+        {{ session('success') }}
+    </div>
+    @endif
+
     <h1 class="text-2xl font-semibold text-white bg-blue-600 px-4 py-2 rounded-md shadow mb-6">
         Daftar Produk
     </h1>
