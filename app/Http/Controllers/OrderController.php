@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-
         if ($user->role !== 'admin') {
             abort(403, 'Anda tidak memiliki akses.');
         }
 
-        $orders = Order::all();
+        $orders = Order::with(['product', 'customer'])->get();
         return view('orders.index', compact('orders'));
     }
 
@@ -41,15 +40,21 @@ class OrderController extends Controller
 
         $product = Product::findOrFail($request->product_id);
 
-        // Cek stok produk
+        // Validasi stok
         if ($request->quantity > $product->stock) {
             return redirect()->back()
                 ->withInput()
-                ->withErrors(['quantity' => 'Jumlah pesanan melebihi stok produk yang tersedia.']);
+                ->with('error', 'Jumlah pesanan melebihi stok produk yang tersedia.');
         }
 
+        // Hitung total harga
         $totalPrice = $product->price * $request->quantity;
 
+        // Kurangi stok
+        $product->stock -= $request->quantity;
+        $product->save();
+
+        // Buat pesanan
         Order::create([
             'customer_id'     => $request->customer_id,
             'product_id'      => $request->product_id,
@@ -59,10 +64,12 @@ class OrderController extends Controller
             'status'          => $request->status,
         ]);
 
-        // Kurangi stok
-        $product->stock -= $request->quantity;
-        $product->save();
+        return redirect()->route('orders.index')->with('success', 'Order berhasil ditambahkan dan stok telah dikurangi.');
+    }
 
-        return redirect()->route('orders.index')->with('success', 'Order berhasil ditambahkan.');
+    public function destroy(Order $order)
+    {
+        $order->delete();
+        return redirect()->route('orders.index')->with('success', 'Pesanan berhasil dihapus.');
     }
 }
