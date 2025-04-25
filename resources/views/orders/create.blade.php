@@ -21,14 +21,17 @@
                 <label class="block text-gray-700">Produk</label>
                 <select name="product_id" required class="w-full border-gray-300 rounded-md shadow-sm">
                     @foreach($products as $product)
-                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                        <option value="{{ $product->id }}">{{ $product->name }} (Stok: {{ $product->stock }})</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700">Jumlah</label>
-                <input type="number" name="quantity" min="1" required class="w-full border-gray-300 rounded-md shadow-sm">
+                <input type="number" name="quantity" min="1" required class="w-full border-gray-300 rounded-md shadow-sm" value="{{ old('quantity') }}">
+                @error('quantity')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="mb-4">
