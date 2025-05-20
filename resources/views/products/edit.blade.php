@@ -3,10 +3,12 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
-        <a href="{{ route('products.index') }}" class="text-blue-500 hover:underline text-sm mb-4 inline-block">
-            ← Kembali ke Daftar Produk
-        </a>
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Edit Produk</h2>
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Edit Produk</h2>
+            <a href="{{ route('products.index') }}" class="text-sm text-blue-600 hover:underline">
+                ← Kembali
+            </a>
+        </div>
 
         <form action="{{ route('products.update', $product->id) }}" method="POST">
             @csrf
@@ -44,7 +46,6 @@
                     <option value="">-- Pilih Kategori --</option>
                     <option value="mobil" {{ $product->category == 'mobil' ? 'selected' : '' }}>Mobil</option>
                     <option value="motor" {{ $product->category == 'motor' ? 'selected' : '' }}>Motor</option>
-                    <!-- Tambah kategori lain sesuai kebutuhan -->
                 </select>
             </div>
 

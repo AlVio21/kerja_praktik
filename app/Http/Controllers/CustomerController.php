@@ -9,12 +9,6 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        /** @var User $user */
-        $user = Auth::user();
-    
-        if ($user->role !== 'admin') {
-            abort(403, 'Anda tidak memiliki akses.');
-        }
     
         $customers = Customer::all();
         return view('customers.index', compact('customers'));
@@ -22,11 +16,24 @@ class CustomerController extends Controller
     
     public function create()
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         return view('customers.create');
     }
 
     public function store(Request $request)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -40,11 +47,23 @@ class CustomerController extends Controller
 
     public function edit(Customer $customer)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         return view('customers.edit', compact('customer'));
     }
 
     public function update(Request $request, Customer $customer)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -56,9 +75,5 @@ class CustomerController extends Controller
         return redirect()->route('customers.index')->with('success', 'Customer berhasil diperbarui!');
     }
 
-    public function destroy(Customer $customer)
-    {
-        $customer->delete();
-        return redirect()->route('customers.index')->with('success', 'Customer berhasil dihapus!');
-    }
+    
 }

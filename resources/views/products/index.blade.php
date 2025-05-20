@@ -11,12 +11,13 @@
     <h1 class="text-2xl font-semibold text-white bg-blue-600 px-4 py-2 rounded-md shadow mb-6">
         Daftar Produk
     </h1>
-
+    @if(auth()->user()->role === 'admin')
     <div class="flex justify-end mb-4">
         <a href="{{ route('products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow transition">
             + Tambah Produk
         </a>
     </div>
+    @endif
 
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200 text-center">
@@ -27,7 +28,9 @@
                     <th class="px-4 py-2">Harga</th>
                     <th class="px-4 py-2">Stok</th>
                     <th class="px-4 py-2">Kategori</th>
+                    @if(auth()->user()->role === 'admin')
                     <th class="px-4 py-2">Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -38,18 +41,13 @@
                     <td class="px-4 py-2">Rp {{ number_format($p->price, 0, ',', '.') }}</td>
                     <td class="px-4 py-2">{{ $p->stock }}</td>
                     <td class="px-4 py-2">{{ ucfirst($p->category) }}</td>
+                    @if(auth()->user()->role === 'admin')
                     <td class="px-4 py-2 space-x-2">
                         <a href="{{ route('products.edit', $p) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-sm">
                             Edit
                         </a>
-                        <form action="{{ route('products.destroy', $p) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus produk ini?');">
-                            @csrf
-                            @method('DELETE')
-                            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
-                                Hapus
-                            </button>
-                        </form>
                     </td>
+                    @endif
                 </tr>
                 @empty
                 <tr>

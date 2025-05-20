@@ -9,24 +9,29 @@ class ProductController extends Controller
 {
     public function index()
     {
-        /** @var User $user */
-        $user = Auth::user();
-    
-        if ($user->role !== 'admin') {
-            abort(403, 'Anda tidak memiliki akses.');
-        }
-    
         $products = Product::all();
         return view('products.index', compact('products'));
     }
 
     public function create()
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         return view('products.create');
     }
 
     public function store(Request $request)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -42,11 +47,23 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         return view('products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
+        /** @var User $user */
+        $user = Auth::user();
+    
+        if ($user->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses.');
+        }
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -58,11 +75,5 @@ class ProductController extends Controller
         $product->update($validated);
 
         return redirect()->route('products.index')->with('success', 'Produk berhasil diperbarui!');
-    }
-
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        return redirect()->route('products.index')->with('success', 'Produk berhasil dihapus!');
     }
 }
