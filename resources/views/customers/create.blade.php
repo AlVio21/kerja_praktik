@@ -7,6 +7,13 @@
             <h2 class="text-2xl font-bold mb-6 text-gray-800">Tambah Customer</h2>
             <a href="{{ route('customers.index') }}" class="text-sm text-blue-600 hover:underline">← Kembali</a>
         </div>
+        @if(session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <strong class="font-bold">Error!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        @endif
+
         <form action="{{ route('customers.store') }}" method="POST">
             @csrf
 

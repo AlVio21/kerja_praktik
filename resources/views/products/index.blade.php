@@ -11,13 +11,30 @@
     <h1 class="text-2xl font-semibold text-white bg-blue-600 px-4 py-2 rounded-md shadow mb-6">
         Daftar Produk
     </h1>
-    @if(auth()->user()->role === 'admin')
-    <div class="flex justify-end mb-4">
-        <a href="{{ route('products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow transition">
-            + Tambah Produk
+
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-4 space-y-3 md:space-y-0">
+    <form method="GET" action="{{ route('products.index') }}" class="flex w-full md:w-auto items-center space-x-2">
+        <div class="flex">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..." class="w-full md:w-64 px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded-r-md">
+                Cari
+            </button>
+        </div>
+        @if(request('search'))
+        <a href="{{ route('products.index') }}"
+           class="text-sm text-red-600 hover:underline whitespace-nowrap ml-2">
+            Reset
         </a>
-    </div>
+        @endif
+    </form>
+
+    @if(auth()->user()->role === 'admin')
+    <a href="{{ route('products.create') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded shadow transition">
+        + Tambah Produk
+    </a>
     @endif
+</div>
+
 
     <div class="overflow-x-auto bg-white shadow-md rounded-lg">
         <table class="min-w-full divide-y divide-gray-200 text-center">
