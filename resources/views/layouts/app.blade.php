@@ -9,7 +9,7 @@
     
     <!-- CoreUI CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <script src="{{ asset('public/vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
